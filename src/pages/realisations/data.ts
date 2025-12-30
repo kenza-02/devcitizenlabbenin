@@ -60,10 +60,10 @@ export const projetsData: ProjectData = {
   'open-data-observatory': {
     title: 'Observatoire des données ouvertes',
     category: 'Data & Visualisation',
-    client: 'Gouvernement du Sénégal',
+    client: 'Gouvernement du Bénin',
     date: 'Mars - Décembre 2023',
     heroImage: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&auto=format&fit=crop&w=1600&q=80',
-    description: 'Portail national centralisant les données publiques sénégalaises.',
+    description: 'Portail national centralisant les données publiques béninoises.',
     challenge: 'Données publiques dispersées et difficiles d\'accès.',
     solution: 'Portail moderne avec visualisation interactive et APIs publiques.',
     technologies: ['Vue.js', 'D3.js', 'Python', 'PostgreSQL'],
@@ -79,7 +79,7 @@ export const projetsData: ProjectData = {
       'Première place Open Data Afrique',
     ],
     testimonial: {
-      quote: 'Transformé l\'accès aux informations publiques au Sénégal.',
+      quote: 'Transformé l\'accès aux informations publiques au Bénin.',
       author: 'Dr. Aïssatou Dibba',
       role: 'Directrice Open Data',
       image: 'https://images.unsplash.com/photo-1582750433449-648ed127bb54?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80',
@@ -91,7 +91,7 @@ export const projetsData: ProjectData = {
   'civic-engagement-tool': {
     title: 'Outil d\'engagement civique',
     category: 'Application Mobile',
-    client: 'Communes du Sénégal',
+    client: 'Communes du Bénin',
     date: 'Octobre 2023 - Juin 2024',
     heroImage: 'https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?ixlib=rb-4.0.3&auto=format&fit=crop&w=1600&q=80',
     description: 'Système mobile de suivi des consultations publiques.',
@@ -125,7 +125,7 @@ export const projetsData: ProjectData = {
     date: '2023-2024',
     heroImage: 'https://images.unsplash.com/photo-1531482615713-2afd69097998?ixlib=rb-4.0.3&auto=format&fit=crop&w=1600&q=80',
     description: 'Programme de formation intensive pour jeunes en innovation sociale.',
-    challenge: 'Jeunes sénégalais manquent de compétences techniques.',
+    challenge: 'Jeunes béninois manquent de compétences techniques.',
     solution: '3 bootcamps intensifs avec théorie et pratique.',
     technologies: ['JavaScript', 'React', 'Node.js'],
     features: [
@@ -151,7 +151,7 @@ export const projetsData: ProjectData = {
   'media-campaign': {
     title: 'Campagne Médias & Données Ouvertes',
     category: 'Sensibilisation',
-    client: 'Médias Sénégalais',
+    client: 'Médias Béninois',
     date: 'Janvier - Juillet 2023',
     heroImage: 'https://images.unsplash.com/photo-1504711434969-e33886168f5c?ixlib=rb-4.0.3&auto=format&fit=crop&w=1600&q=80',
     description: 'Formation de journalistes à l\'utilisation des données ouvertes.',
@@ -179,12 +179,12 @@ export const projetsData: ProjectData = {
     ],
   },
   'hackathon-open-data': {
-    title: 'Hackathon Open Data Sénégal',
+    title: 'Hackathon Open Data Bénin',
     category: 'Événement',
     client: 'Africtivistes',
     date: 'Mai 2024',
     heroImage: 'https://images.unsplash.com/photo-1504384308090-c894fdcc538d?ixlib=rb-4.0.3&auto=format&fit=crop&w=1600&q=80',
-    description: 'Hackathon dédié aux données ouvertes au Sénégal.',
+    description: 'Hackathon dédié aux données ouvertes au Bénin.',
     challenge: 'Données ouvertes sous-utilisées localement.',
     solution: 'Événement de 48h avec défis concrets.',
     technologies: ['APIs', 'Open Data'],
@@ -199,7 +199,7 @@ export const projetsData: ProjectData = {
       '+200 articles médias',
     ],
     testimonial: {
-      quote: 'Innovation citoyenne catalysée au Sénégal.',
+      quote: 'Innovation citoyenne catalysée au Bénin.',
       author: 'Modou Diop',
       role: 'Coordinateur Africtivistes',
       image: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80',

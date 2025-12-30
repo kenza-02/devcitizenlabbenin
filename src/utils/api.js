@@ -2,7 +2,7 @@ export async function navQuery() {
   try {
     const apiUrl =
       import.meta.env.PUBLIC_WORDPRESS_API_URL ||
-      "https://citizenlab.africtivistes.org/senegal/graphql";
+      "https://citizenlab.africtivistes.org/benin/graphql";
     console.log("Fetching menu from:", apiUrl);
 
     // Créer un AbortController pour gérer le timeout
@@ -88,7 +88,7 @@ export async function getNodeByURI(uri) {
   try {
     const apiUrl =
       import.meta.env.PUBLIC_WORDPRESS_API_URL ||
-      "https://citizenlab.africtivistes.org/senegal/graphql";
+      "https://citizenlab.africtivistes.org/benin/graphql";
 
     // Créer un AbortController pour gérer le timeout
     const controller = new AbortController();
@@ -210,7 +210,7 @@ export async function getAllUris() {
   try {
     const apiUrl =
       import.meta.env.PUBLIC_WORDPRESS_API_URL ||
-      "https://citizenlab.africtivistes.org/senegal/graphql";
+      "https://citizenlab.africtivistes.org/benin/graphql";
 
     let allUris = [];
     let afterCursor = null;
@@ -370,9 +370,9 @@ export async function findLatestPostsAPI() {
       {
         date: new Date().toISOString(),
         permalink: "/blog/actualites-citizenlab",
-        title: "Actualités CitizenLab Sénégal",
+        title: "Actualités CitizenLab Bénin",
         excerpt:
-          "Découvrez les dernières actualités et activités de CitizenLab Sénégal...",
+          "Découvrez les dernières actualités et activités de CitizenLab Bénin...",
         featuredImage: {
           node: {
             mediaItemUrl: "/assets/images/formation1.jpg",
@@ -386,7 +386,7 @@ export async function findLatestPostsAPI() {
       {
         date: new Date(Date.now() - 86400000).toISOString(),
         permalink: "/blog/participation-citoyenne",
-        title: "La Participation Citoyenne au Sénégal",
+        title: "La Participation Citoyenne au Bénin",
         excerpt:
           "Comment encourager et développer la participation citoyenne dans notre pays...",
         featuredImage: {
@@ -488,9 +488,9 @@ export async function newsPagePostsQuery() {
       {
         date: new Date().toISOString(),
         permalink: "/blog/actualites-citizenlab",
-        title: "Actualités CitizenLab Sénégal",
+        title: "Actualités CitizenLab Bénin",
         excerpt:
-          "Découvrez les dernières actualités et activités de CitizenLab Sénégal...",
+          "Découvrez les dernières actualités et activités de CitizenLab Bénin...",
         featuredImage: {
           node: {
             mediaItemUrl: "/assets/images/formation1.jpg",
