@@ -3,15 +3,15 @@ import Layout from "~/layouts/PageLayout.astro";
 import HeroSection from "~/components/widgets/home/HeroSection.astro";
 import MissionSection from "~/components/widgets/home/MissionSection.astro";
 import ProjectSection from "~/components/widgets/home/ProjectSection.astro";
-import ActuSection from "~/components/widgets/home/ActuSection.astro";
-import EventSection from "~/components/widgets/home/EventSection.astro";
-import ParticipationSection from "~/components/widgets/home/ParticipationSection.astro";
+import AboutUsSection from "~/components/widgets/apropos/AboutUs.astro";
+import MissionsSection from "~/components/widgets/apropos/Missions.astro";
+import ValuesSection from "~/components/widgets/apropos/Values.astro";
 import TestimonySection from "~/components/widgets/home/TestimonySection.astro";
 import PartenaireSection from "~/components/widgets/home/PartenaireSection.astro";
 
 const metadata = {
   title:
-    "Africtivistes CitizenLab Sénégal 🇸🇳 — Votre plateforme d'informations citoyenne",
+    "Africtivistes CitizenLab Benin  — Votre plateforme d'informations citoyenne",
   ignoreTitleTemplate: true,
 };
 ---
@@ -23,17 +23,14 @@ const metadata = {
   <!-- Mission Section  -->
   <MissionSection />
 
-  <!-- Latest News Section -->
-  <ActuSection />
+ <!-- Qui sommes-nous - Section -->
+  <AboutUsSection />
 
-  <!-- Featured Projects Section -->
-  <ProjectSection />
+  <!-- Notre Mission - Section -->
+  <MissionsSection />
 
-  <!-- Formation - Bootcamp Section -->
-  <EventSection />
-
-  <!-- Participation Section -->
-  <ParticipationSection />
+  <!-- Nos Valeurs - Section -->
+  <ValuesSection />
 
   <!-- Brands / Partners Section -->
   <PartenaireSection/>
