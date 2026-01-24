@@ -2,11 +2,9 @@ import { getPermalink, getBlogPermalink } from "~/utils/permalinks";
 
 export const headerData = {
   links: [
-    { text: "Accueil", href: getPermalink("/") },
     {
       text: "Qui sommes nous",
       links: [
-        { text: "A propos", href: getPermalink("/a-propos") },
         { text: "Equipe", href: getPermalink("/equipe") },
         { text: "Partenaires", href: getPermalink("/partenaires") },
         { text: "FAQ", href: getPermalink("/faq") },
@@ -19,12 +17,11 @@ export const headerData = {
         { text: "Projets réalisés", href: getPermalink("/realisations") },
       ],
     },
+    { text: "Blog", href: getPermalink("/news") },
+    { text: "Magazine", href: getPermalink("/magazine") },
     {
       text: "Médias & Actualités",
       links: [
-        { text: "Actualités", href: getPermalink("/news") },
-        // { text: "Campagnes", href: getPermalink("campagnes", "category") },
-        // { text: "Blog / Opinions", href: getPermalink("blog", "category") },
         { text: "Podcasts", href: getPermalink("/podcasts") },
         { text: "Vidéos", href: getPermalink("videos") },
       ],
@@ -32,29 +29,7 @@ export const headerData = {
     {
       text: "Formations & Ressources",
       href: getPermalink("/formations/bootcamps-ateliers"),
-      // links: [
-      //   { text: "Bootcamps / Ateliers", href: getPermalink("/bootcamp") },
-      //   {
-      //     text: "Modules en ligne",
-      //     href: getPermalink("campagnes", "category"),
-      //   },
-      //   {
-      //     text: "Ressources pédagogiques",
-      //     href: getPermalink("blog", "category"),
-      //   },
-      // ],
     },
-    // {
-    //   text: "Participez / Implications",
-    //   links: [
-    //     { text: "Devenir partenaire", href: getPermalink("/news") },
-    //     {
-    //       text: "Appels à candidatures",
-    //       href: getPermalink("campagnes", "category"),
-    //     },
-    //   ],
-    // },
-    { text: "Contact", href: getPermalink("/contact") },
   ],
 };
 
