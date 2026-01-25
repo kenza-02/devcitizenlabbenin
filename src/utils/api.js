@@ -758,3 +758,238 @@ export async function getAllActualites() {
   const { data } = await response.json();
   return data?.posts?.nodes ?? [];
 }
+
+export async function getRealisationsPosts() {
+  const apiUrl = import.meta.env.PUBLIC_WORDPRESS_API_URL;
+
+  if (!apiUrl) {
+    console.warn("PUBLIC_WORDPRESS_API_URL is not defined");
+    return [];
+  }
+
+  try {
+    const response = await fetch(apiUrl, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        query: `
+          query GetRealisationsPosts {
+            posts(
+              where: { categoryName: "Realisations" }
+              first: 100
+              orderby: { field: DATE, order: DESC }
+            ) {
+              nodes {
+                id
+                title
+                excerpt
+                date
+                slug
+                content
+                uri
+                categories {
+                  nodes {
+                    name
+                    slug
+                  }
+                }
+                featuredImage {
+                  node {
+                    mediaItemUrl
+                    altText
+                    srcSet
+                    sourceUrl
+                    mediaDetails {
+                      height
+                      width
+                    }
+                  }
+                }
+                // Additional fields that might be useful for Realisations
+                RealisationsMeta {
+                  client
+                  periode
+                  technologies
+                  impact
+                }
+              }
+            }
+          }
+        `
+      })
+    });
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+
+    const { data } = await response.json();
+    return data?.posts?.nodes || [];
+  } catch (error) {
+    console.error("Error fetching Realisations:", error.message);
+    return [];
+  }
+}
+export async function getActualitesPosts() {
+  const query = `
+    query GetActualitesPosts {
+      posts(
+        where: {
+          categoryName: "Actualites"
+        }
+        first: 20
+      ) {
+        nodes {
+          id
+          title
+          excerpt
+          date
+          slug
+          content
+          categories {
+            nodes {
+              name
+            }
+          }
+          featuredImage {
+            node {
+              mediaItemUrl
+            }
+          }
+        }
+      }
+    }
+  `;
+
+  const res = await fetch(import.meta.env.PUBLIC_WP_GRAPHQL_URL, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ query }),
+  });
+
+  const json = await res.json();
+  return json.data.posts.nodes;
+}
+
+export async function getAllRealisations() {
+  const apiUrl = import.meta.env.PUBLIC_WORDPRESS_API_URL;
+
+  if (!apiUrl) {
+    console.warn("PUBLIC_WORDPRESS_API_URL is not defined");
+    return [];
+  }
+
+  try {
+    const response = await fetch(apiUrl, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        query: `
+          query GetRealisations {
+            posts(
+              where: { categoryName: "Realisations" }
+              first: 50
+            ) {
+              nodes {
+                id
+                title
+                excerpt
+                date
+                slug
+                featuredImage {
+                  node {
+                    mediaItemUrl
+                    altText
+                  }
+                }
+              }
+            }
+          }
+        `
+      })
+    });
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+
+    const result = await response.json();
+    
+    if (result.errors) {
+      console.error("GraphQL errors:", result.errors);
+      return [];
+    }
+
+    return result.data?.posts?.nodes || [];
+  } catch (error) {
+    console.error("Error fetching Realisations:", error);
+    return [];
+  }
+}
+export async function getRealisationBySlug(slug) {
+  const apiUrl = import.meta.env.PUBLIC_WORDPRESS_API_URL;
+
+  if (!apiUrl) {
+    console.warn("PUBLIC_WORDPRESS_API_URL is not defined");
+    return null;
+  }
+
+  try {
+    const response = await fetch(apiUrl, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        query: `
+          query GetRealisationBySlug($slug: ID!) {
+            post(id: $slug, idType: SLUG) {
+              id
+              title
+              excerpt
+              content
+              date
+              slug
+              uri
+              categories {
+                nodes {
+                  name
+                  slug
+                }
+              }
+              featuredImage {
+                node {
+                  mediaItemUrl
+                  altText
+                  srcSet
+                  sourceUrl
+                  mediaDetails {
+                    height
+                    width
+                  }
+                }
+              }
+            }
+          }
+        `,
+        variables: { slug }
+      })
+    });
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+
+    const result = await response.json();
+    
+    if (result.errors) {
+      console.error("GraphQL errors:", result.errors);
+      return null;
+    }
+
+    return result.data?.post || null;
+  } catch (error) {
+    console.error("Error fetching Realisation:", error);
+    return null;
+  }
+}
