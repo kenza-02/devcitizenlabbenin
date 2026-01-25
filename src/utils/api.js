@@ -50,7 +50,7 @@ export async function navQuery() {
     }
 
     const menuItems = data.menuItems.nodes.filter(
-      (node) => node.parentId === null
+      (node) => node.parentId === null,
     );
     console.log("Filtered Menu Items:", menuItems);
     return menuItems;
@@ -272,7 +272,7 @@ export async function getAllUris() {
       } catch (error) {
         console.error(
           `Error fetching URIs (attempt ${attempt + 1}/${maxAttempts}):`,
-          error.message
+          error.message,
         );
         attempt++;
 
@@ -512,7 +512,7 @@ export async function getAllMembers() {
 
   if (!apiUrl) {
     console.warn(
-      "PUBLIC_WORDPRESS_API_URL is not defined, returning empty array"
+      "PUBLIC_WORDPRESS_API_URL is not defined, returning empty array",
     );
     return [];
   }
@@ -713,17 +713,18 @@ export function extractAudioUrl(postContent) {
 
   // Si le thème utilise wp-block-audio
   const wpAudioMatch = postContent.match(
-    /<figure class="wp-block-audio"[\s\S]*?<\/figure>/
+    /<figure class="wp-block-audio"[\s\S]*?<\/figure>/,
   );
   if (wpAudioMatch) return wpAudioMatch[0];
 
   return "";
 }
+
 export async function getAllActualites() {
   const apiUrl = import.meta.env.PUBLIC_WORDPRESS_API_URL;
   const response = await fetch(apiUrl, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
     body: JSON.stringify({
       query: `
         query GetAllActualites {
@@ -752,127 +753,283 @@ export async function getAllActualites() {
             }
           }
         }
-      `
-    })
+      `,
+    }),
   });
   const { data } = await response.json();
   return data?.posts?.nodes ?? [];
 }
 
-export async function getRealisationsPosts() {
+export async function getAllFormations() {
   const apiUrl = import.meta.env.PUBLIC_WORDPRESS_API_URL;
 
-  if (!apiUrl) {
-    console.warn("PUBLIC_WORDPRESS_API_URL is not defined");
-    return [];
-  }
-
-  try {
-    const response = await fetch(apiUrl, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        query: `
-          query GetRealisationsPosts {
-            posts(
-              where: { categoryName: "Realisations" }
-              first: 100
-              orderby: { field: DATE, order: DESC }
-            ) {
-              nodes {
-                id
-                title
-                excerpt
+  const response = await fetch(apiUrl, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      query: `
+        query GetAllFormations {
+          posts(
+            where: { categoryName: "Formations", status: PUBLISH }
+            first: 100
+          ) {
+            nodes {
+              slug
+              formation {
+                nom
+                description
+                lieu
                 date
-                slug
-                content
-                uri
-                categories {
-                  nodes {
-                    name
-                    slug
-                  }
+                prix
+                statut
+                duree
+                formateur
+                profession
+                places
+                lien {
+                  url
+                  title
+                  target
                 }
-                featuredImage {
-                  node {
-                    mediaItemUrl
-                    altText
-                    srcSet
-                    sourceUrl
-                    mediaDetails {
-                      height
-                      width
-                    }
-                  }
+              }
+              featuredImage {
+                node {
+                  mediaItemUrl
+                  altText
                 }
-                // Additional fields that might be useful for Realisations
-                RealisationsMeta {
-                  client
-                  periode
-                  technologies
-                  impact
+              }    
+            }
+          }
+        }
+      `,
+    }),
+  });
+
+  const json = await response.json();
+  console.log("GRAPHQL:", json);
+
+  return json?.data?.posts?.nodes ?? [];
+}
+
+export async function getNextFormation() {
+  const apiUrl = import.meta.env.PUBLIC_WORDPRESS_API_URL;
+
+  const response = await fetch(apiUrl, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      query: `
+        query GetNextFormation {
+          posts(
+            where: {
+              categoryName: "Formations"
+              status: PUBLISH
+            }
+            first: 50
+          ) {
+            nodes {
+              slug
+              formation {
+                nom
+                description
+                lieu
+                date
+                prix
+                statut
+                duree
+                formateur
+                profession
+                places
+                lien {
+                  url
+                  title
+                  target
+                }
+              }
+              featuredImage {
+                node {
+                  mediaItemUrl
+                  altText
                 }
               }
             }
           }
-        `
-      })
-    });
-
-    if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
-    }
-
-    const { data } = await response.json();
-    return data?.posts?.nodes || [];
-  } catch (error) {
-    console.error("Error fetching Realisations:", error.message);
-    return [];
-  }
-}
-export async function getActualitesPosts() {
-  const query = `
-    query GetActualitesPosts {
-      posts(
-        where: {
-          categoryName: "Actualites"
         }
-        first: 20
-      ) {
-        nodes {
-          id
-          title
-          excerpt
-          date
-          slug
-          content
-          categories {
-            nodes {
-              name
-            }
-          }
-          featuredImage {
-            node {
-              mediaItemUrl
-            }
-          }
-        }
-      }
-    }
-  `;
-
-  const res = await fetch(import.meta.env.PUBLIC_WP_GRAPHQL_URL, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({ query }),
+      `,
+    }),
   });
 
-  const json = await res.json();
-  return json.data.posts.nodes;
+  const json = await response.json();
+  console.log("GRAPHQL:", json);
+
+  const formations = json?.data?.posts?.nodes ?? [];
+
+  // Filtrer les formations avec le statut "À venir"
+  const formationsAvenir = formations
+    .filter((formation) => {
+      const statut = formation.formation?.statut;
+      // Vérifier si c'est un tableau qui contient "À venir"
+      if (Array.isArray(statut)) {
+        return statut.includes("À venir");
+      }
+      // Sinon vérifier si c'est une chaîne égale à "À venir"
+      return statut === "À venir";
+    })
+    .sort((a, b) => {
+      // Trier par date croissante (la plus proche en premier)
+      const dateA = new Date(a.formation.date);
+      const dateB = new Date(b.formation.date);
+      return dateA - dateB;
+    });
+
+  console.log("Formations à venir trouvées:", formationsAvenir.length);
+
+  // Retourner la première formation (la prochaine)
+  return formationsAvenir[0] ?? null;
 }
 
+export async function getAllMagazines() {
+  const apiUrl = import.meta.env.PUBLIC_WORDPRESS_API_URL;
+
+  const response = await fetch(apiUrl, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      query: `
+        query GetAllMagazines {
+          posts(
+            where: { categoryName: "Magazine", status: PUBLISH }
+            first: 100
+          ) {
+            nodes {
+              slug
+              magazine {
+                titre
+                description
+                date
+                fichier {
+                  node {
+                    mediaItemUrl
+                    altText
+                  }
+                }
+              }
+              featuredImage {
+                node {
+                  mediaItemUrl
+                  altText
+                }
+              }    
+            }
+          }
+        }
+      `,
+    }),
+  });
+
+  const json = await response.json();
+  console.log("GRAPHQL:", json);
+
+  return json?.data?.posts?.nodes ?? [];
+}
+
+export async function getAllPodcast() {
+  const apiUrl = import.meta.env.PUBLIC_WORDPRESS_API_URL;
+  if (!apiUrl) return [];
+
+  const response = await fetch(apiUrl, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      query: `
+        query PodcastPosts {
+          posts(where: { categoryName: "Podcast" }, first: 20) {
+            nodes {
+              id
+              slug
+              title
+              excerpt
+              content
+              date
+              uri
+              featuredImage {
+                node {
+                  mediaItemUrl
+                  altText
+                }
+              }
+              categories {
+                nodes {
+                  name
+                  slug
+                }
+              }
+              podcast {
+                type
+              }  
+            }
+          }
+        }
+      `,
+    }),
+  });
+
+  const json = await response.json();
+  console.log("GRAPHQL PODCAST:", json);
+
+  return json?.data?.posts?.nodes ?? [];
+}
+
+export function extractVideoUrl(postContent) {
+  if (!postContent) return "";
+
+  // <video> natif
+  const match = postContent.match(/<video[\s\S]*?<\/video>/);
+  if (match) return match[0];
+
+  // Bloc Gutenberg wp-block-video
+  const wpVideoMatch = postContent.match(
+    /<figure class="wp-block-video"[\s\S]*?<\/figure>/,
+  );
+  if (wpVideoMatch) return wpVideoMatch[0];
+
+  return "";
+}
+
+export async function getAllVideos() {
+  const apiUrl = import.meta.env.PUBLIC_WORDPRESS_API_URL;
+  const response = await fetch(apiUrl, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      query: `
+        query GetAllVideos {
+          posts(
+            where: { categoryName: "Videos" }
+            first: 100
+          ) {
+            nodes {
+              title
+              excerpt
+              content
+              slug
+              uri
+              date
+              featuredImage {
+                node {
+                  mediaItemUrl
+                  altText
+                }
+              }
+            }
+          }
+        }
+      `,
+    }),
+  });
+  const { data } = await response.json();
+  return data?.posts?.nodes ?? [];
+}
 export async function getAllRealisations() {
   const apiUrl = import.meta.env.PUBLIC_WORDPRESS_API_URL;
 
@@ -883,8 +1040,8 @@ export async function getAllRealisations() {
 
   try {
     const response = await fetch(apiUrl, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         query: `
           query GetRealisations {
@@ -907,8 +1064,8 @@ export async function getAllRealisations() {
               }
             }
           }
-        `
-      })
+        `,
+      }),
     });
 
     if (!response.ok) {
@@ -916,7 +1073,7 @@ export async function getAllRealisations() {
     }
 
     const result = await response.json();
-    
+
     if (result.errors) {
       console.error("GraphQL errors:", result.errors);
       return [];
@@ -938,8 +1095,8 @@ export async function getRealisationBySlug(slug) {
 
   try {
     const response = await fetch(apiUrl, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         query: `
           query GetRealisationBySlug($slug: ID!) {
@@ -972,8 +1129,8 @@ export async function getRealisationBySlug(slug) {
             }
           }
         `,
-        variables: { slug }
-      })
+        variables: { slug },
+      }),
     });
 
     if (!response.ok) {
@@ -981,7 +1138,7 @@ export async function getRealisationBySlug(slug) {
     }
 
     const result = await response.json();
-    
+
     if (result.errors) {
       console.error("GraphQL errors:", result.errors);
       return null;

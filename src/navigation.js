@@ -18,7 +18,7 @@ export const headerData = {
       ],
     },
     { text: "Blog", href: getPermalink("/news") },
-    { text: "Magazine", href: getPermalink("/magazine") },
+    { text: "Magazine", href: getPermalink("/magazines") },
     {
       text: "Médias & Actualités",
       links: [
@@ -64,11 +64,11 @@ export const footerData = {
       title: "Nous Contacter",
       links: [
         {
-          text: "aclsenegal@africtivistes.org",
-          href: "mailto:aclsenegal@africtivistes.org ",
+          text: "aclbenin@africtivistes.org",
+          href: "mailto:aclbenin@africtivistes.org ",
         },
-        { text: "+221 78 018 01 05", href: "tel:+221 78 018 01 05" },
-        { text: " Dakar, Sénégal ", href: "#" },
+        // { text: "+221 78 018 01 05", href: "tel:+221 78 018 01 05" },
+        // { text: " Dakar, Sénégal ", href: "#" },
       ],
     },
   ],
