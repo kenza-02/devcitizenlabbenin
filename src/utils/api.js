@@ -719,11 +719,12 @@ export function extractAudioUrl(postContent) {
 
   return "";
 }
+
 export async function getAllActualites() {
   const apiUrl = import.meta.env.PUBLIC_WORDPRESS_API_URL;
   const response = await fetch(apiUrl, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
     body: JSON.stringify({
       query: `
         query GetAllActualites {
@@ -752,9 +753,282 @@ export async function getAllActualites() {
             }
           }
         }
-      `
-    })
+      `,
+    }),
   });
   const { data } = await response.json();
   return data?.posts?.nodes ?? [];
 }
+
+export async function getAllFormations() {
+  const apiUrl = import.meta.env.PUBLIC_WORDPRESS_API_URL;
+
+  const response = await fetch(apiUrl, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      query: `
+        query GetAllFormations {
+          posts(
+            where: { categoryName: "Formations", status: PUBLISH }
+            first: 100
+          ) {
+            nodes {
+              slug
+              formation {
+                nom
+                description
+                lieu
+                date
+                prix
+                statut
+                duree
+                formateur
+                profession
+                places
+                lien {
+                  url
+                  title
+                  target
+                }
+              }
+              featuredImage {
+                node {
+                  mediaItemUrl
+                  altText
+                }
+              }    
+            }
+          }
+        }
+      `,
+    }),
+  });
+
+  const json = await response.json();
+  console.log("GRAPHQL:", json);
+
+  return json?.data?.posts?.nodes ?? [];
+}
+
+export async function getNextFormation() {
+  const apiUrl = import.meta.env.PUBLIC_WORDPRESS_API_URL;
+
+  const response = await fetch(apiUrl, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      query: `
+        query GetNextFormation {
+          posts(
+            where: {
+              categoryName: "Formations"
+              status: PUBLISH
+            }
+            first: 50
+          ) {
+            nodes {
+              slug
+              formation {
+                nom
+                description
+                lieu
+                date
+                prix
+                statut
+                duree
+                formateur
+                profession
+                places
+                lien {
+                  url
+                  title
+                  target
+                }
+              }
+              featuredImage {
+                node {
+                  mediaItemUrl
+                  altText
+                }
+              }
+            }
+          }
+        }
+      `,
+    }),
+  });
+
+  const json = await response.json();
+  console.log("GRAPHQL:", json);
+
+  const formations = json?.data?.posts?.nodes ?? [];
+  
+  // Filtrer les formations avec le statut "À venir"
+  const formationsAvenir = formations
+    .filter(formation => {
+      const statut = formation.formation?.statut;
+      // Vérifier si c'est un tableau qui contient "À venir"
+      if (Array.isArray(statut)) {
+        return statut.includes("À venir");
+      }
+      // Sinon vérifier si c'est une chaîne égale à "À venir"
+      return statut === "À venir";
+    })
+    .sort((a, b) => {
+      // Trier par date croissante (la plus proche en premier)
+      const dateA = new Date(a.formation.date);
+      const dateB = new Date(b.formation.date);
+      return dateA - dateB;
+    });
+
+  console.log("Formations à venir trouvées:", formationsAvenir.length);
+
+  // Retourner la première formation (la prochaine)
+  return formationsAvenir[0] ?? null;
+}
+
+export async function getAllMagazines() {
+  const apiUrl = import.meta.env.PUBLIC_WORDPRESS_API_URL;
+
+  const response = await fetch(apiUrl, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      query: `
+        query GetAllMagazines {
+          posts(
+            where: { categoryName: "Magazine", status: PUBLISH }
+            first: 100
+          ) {
+            nodes {
+              slug
+              magazine {
+                titre
+                description
+                date
+                fichier {
+                  node {
+                    mediaItemUrl
+                    altText
+                  }
+                }
+              }
+              featuredImage {
+                node {
+                  mediaItemUrl
+                  altText
+                }
+              }    
+            }
+          }
+        }
+      `,
+    }),
+  });
+
+  const json = await response.json();
+  console.log("GRAPHQL:", json);
+
+  return json?.data?.posts?.nodes ?? [];
+}
+
+export async function getAllPodcast() {
+  const apiUrl = import.meta.env.PUBLIC_WORDPRESS_API_URL;
+  if (!apiUrl) return [];
+
+  const response = await fetch(apiUrl, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      query: `
+        query PodcastPosts {
+          posts(where: { categoryName: "Podcast" }, first: 20) {
+            nodes {
+              id
+              slug
+              title
+              excerpt
+              content
+              date
+              uri
+              featuredImage {
+                node {
+                  mediaItemUrl
+                  altText
+                }
+              }
+              categories {
+                nodes {
+                  name
+                  slug
+                }
+              }
+              podcast {
+                type
+              }  
+            }
+          }
+        }
+      `,
+    }),
+  });
+
+  const json = await response.json();
+  console.log("GRAPHQL PODCAST:", json);
+
+  return json?.data?.posts?.nodes ?? [];
+}
+
+
+export function extractVideoUrl(postContent) {
+  if (!postContent) return "";
+
+  // <video> natif
+  const match = postContent.match(/<video[\s\S]*?<\/video>/);
+  if (match) return match[0];
+
+  // Bloc Gutenberg wp-block-video
+  const wpVideoMatch = postContent.match(
+    /<figure class="wp-block-video"[\s\S]*?<\/figure>/
+  );
+  if (wpVideoMatch) return wpVideoMatch[0];
+
+  return "";
+}
+
+export async function getAllVideos() {
+  const apiUrl = import.meta.env.PUBLIC_WORDPRESS_API_URL;
+  const response = await fetch(apiUrl, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      query: `
+        query GetAllVideos {
+          posts(
+            where: { categoryName: "Videos" }
+            first: 100
+          ) {
+            nodes {
+              title
+              excerpt
+              content
+              slug
+              uri
+              date
+              featuredImage {
+                node {
+                  mediaItemUrl
+                  altText
+                }
+              }
+            }
+          }
+        }
+      `,
+    }),
+  });
+  const { data } = await response.json();
+  return data?.posts?.nodes ?? [];
+}
+
