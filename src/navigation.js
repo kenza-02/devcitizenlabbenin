@@ -39,8 +39,8 @@ export const footerData = {
       title: "CitizenLab",
       links: [
         {
-          text: "A Propos",
-          href: getPermalink("/a-propos"),
+          text: "Partenaires",
+          href: getPermalink("/partenaires"),
         },
         { text: "Equipe", href: getPermalink("/equipe") },
       ],
