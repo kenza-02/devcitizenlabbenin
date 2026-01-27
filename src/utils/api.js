@@ -1157,3 +1157,44 @@ export async function getRealisationBySlug(slug) {
     return null;
   }
 }
+// Fonction pour récupérer tous les projets
+export async function getAllProjets() {
+  const apiUrl = import.meta.env.PUBLIC_WORDPRESS_API_URL;
+  const response = await fetch(apiUrl, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      query: `
+        query GetAllProjets {
+          posts(
+            where: { categoryName: "projets" }
+            first: 100
+          ) {
+            nodes {
+              title
+              excerpt
+              content
+              slug
+              uri
+              date
+              categories {
+                nodes {
+                  name
+                  slug
+                }
+              }
+              featuredImage {
+                node {
+                  mediaItemUrl
+                  altText
+                }
+              }
+            }
+          }
+        }
+      `,
+    }),
+  });
+  const { data } = await response.json();
+  return data?.posts?.nodes ?? [];
+}
