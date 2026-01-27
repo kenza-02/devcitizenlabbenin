@@ -162,6 +162,7 @@ export async function getNodeByURI(uri) {
                           date
                           title
                           excerpt
+                          content
                           permalink: uri
                           categories {
                             nodes {
@@ -341,6 +342,7 @@ export async function findLatestPostsAPI() {
                         }
                         commentCount
                         excerpt
+                        content
                         featuredImage {
                           node {
                             mediaItemUrl
@@ -434,6 +436,7 @@ export async function newsPagePostsQuery() {
                   title
                   commentCount
                   excerpt
+                  content
                   categories {
                     nodes {
                       name
@@ -507,7 +510,7 @@ export async function newsPagePostsQuery() {
 
 export async function getAllMembers() {
   const apiUrl =
-    import.meta.env.PUBLIC_WORDPRESS_API_URL ||
+    import.meta.env.PUBLIC_WORDPRESS_API_URL2 ||
     "https://citizenlab.africtivistes.org/senegal/graphql";
 
   if (!apiUrl) {
@@ -578,6 +581,7 @@ export async function getActualitesPosts() {
           id
           title
           excerpt
+          content
           date
           slug
           content
@@ -678,6 +682,7 @@ export async function getLatestActualites(limit = 3) {
             nodes {
               title
               excerpt
+              content
               slug
               uri
               date
@@ -721,7 +726,7 @@ export function extractAudioUrl(postContent) {
 }
 
 export async function getAllActualites() {
-  const apiUrl = import.meta.env.PUBLIC_WORDPRESS_API_URL;
+  const apiUrl = import.meta.env.PUBLIC_WORDPRESS_API_URL2;
   const response = await fetch(apiUrl, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
@@ -734,6 +739,7 @@ export async function getAllActualites() {
           ) {
             nodes {
               title
+              content
               excerpt
               slug
               uri
@@ -1052,6 +1058,7 @@ export async function getAllRealisations() {
               nodes {
                 id
                 title
+                content
                 excerpt
                 date
                 slug

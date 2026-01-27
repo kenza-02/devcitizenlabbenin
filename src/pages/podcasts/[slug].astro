@@ -125,8 +125,8 @@ const metadata = {
           <h1 class="text-3xl md:text-4xl lg:text-5xl font-black leading-tight mb-6" set:html={podcast.title} />
 
           <!-- Excerpt -->
-          {podcast.excerpt && (
-            <div class="text-white/60 text-lg leading-relaxed mb-8" set:html={podcast.excerpt} />
+          {podcast.content && (
+            <div class="text-white/60 text-lg leading-relaxed mb-8" set:html={podcast.content} />
           )}
 
           <!-- Action Buttons -->
