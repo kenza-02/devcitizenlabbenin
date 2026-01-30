@@ -28,7 +28,7 @@ export const headerData = {
     },
     {
       text: "Formations & Ressources",
-      href: getPermalink("/formations/bootcamps-ateliers"),
+      href: getPermalink("/formations"),
     },
   ],
 };
