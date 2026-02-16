@@ -372,9 +372,9 @@ export async function findLatestPostsAPI() {
       {
         date: new Date().toISOString(),
         permalink: "/blog/actualites-citizenlab",
-        title: "Actualités CitizenLab Sénégal",
+        title: "Actualités CitizenLab Bénin",
         excerpt:
-          "Découvrez les dernières actualités et activités de CitizenLab Sénégal...",
+          "Découvrez les dernières actualités et activités de CitizenLab Bénin...",
         featuredImage: {
           node: {
             mediaItemUrl: "/assets/images/formation1.jpg",
@@ -388,7 +388,7 @@ export async function findLatestPostsAPI() {
       {
         date: new Date(Date.now() - 86400000).toISOString(),
         permalink: "/blog/participation-citoyenne",
-        title: "La Participation Citoyenne au Sénégal",
+        title: "La Participation Citoyenne au Bénin",
         excerpt:
           "Comment encourager et développer la participation citoyenne dans notre pays...",
         featuredImage: {
@@ -491,9 +491,9 @@ export async function newsPagePostsQuery() {
       {
         date: new Date().toISOString(),
         permalink: "/blog/actualites-citizenlab",
-        title: "Actualités CitizenLab Sénégal",
+        title: "Actualités CitizenLab Bénin",
         excerpt:
-          "Découvrez les dernières actualités et activités de CitizenLab Sénégal...",
+          "Découvrez les dernières actualités et activités de CitizenLab Bénin...",
         featuredImage: {
           node: {
             mediaItemUrl: "/assets/images/formation1.jpg",
