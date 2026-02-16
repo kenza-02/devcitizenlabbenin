@@ -1,11 +1,11 @@
-# 🇸🇳 CitizenLab Sénégal
+# 🇸🇳 CitizenLab Benin
 
 <img src="https://raw.githubusercontent.com/onwidget/.github/main/resources/astrowind/lighthouse-score.png" align="right"
-     alt="CitizenLab Sénégal Lighthouse Score" width="100" height="358">
+     alt="CitizenLab Benin Lighthouse Score" width="100" height="358">
 
-🌟 _Plateforme de participation citoyenne pour le Sénégal_. 🌟
+🌟 _Plateforme de participation citoyenne pour le Benin_. 🌟
 
-**CitizenLab Sénégal** est une fabrique citoyenne développée avec **[Astro 4.0](https://astro.build/) + [Tailwind CSS](https://tailwindcss.com/)**. Le projet vise à appuyer, accompagner et outiller les acteurs de la société civile sénégalaise par la formation, le développement d'outils et l'accompagnement à l'innovation et à la co-création.
+**CitizenLab Benin** est une fabrique citoyenne développée avec **[Astro 4.0](https://astro.build/) + [Tailwind CSS](https://tailwindcss.com/)**. Le projet vise à appuyer, accompagner et outiller les acteurs de la société civile sénégalaise par la formation, le développement d'outils et l'accompagnement à l'innovation et à la co-création.
 
 - ✅ **Production-ready** scores in **PageSpeed Insights** reports.
 - ✅ Integration with **Tailwind CSS** supporting **Dark mode** and **_RTL_**.

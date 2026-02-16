@@ -1,9 +1,8 @@
 ---
 import Layout from '~/layouts/PageLayout.astro';
-import Features3 from '~/components/widgets/Features3.astro';
 import Stats from '~/components/widgets/Stats.astro';
 import CallToAction from '~/components/widgets/CallToAction.astro';
-import RealisationsImg from '~/assets/images/realisations.jpg';
+import RealisationsImg from '~/assets/images/realisation-banner.jpg';
 import { getAllRealisations } from '~/utils/api';
 
 // Définir les interfaces de type pour les données
@@ -146,7 +145,7 @@ const statsData = {
         <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold mb-4 leading-tight">
           Nos Réalisations
         </h1>
-        <p class="text-xl md:text-2xl text-gray-200 leading-relaxed">
+        <p class="text-xl md:text-2xl text-center text-gray-200 leading-relaxed">
           Découvrez les projets qui transforment la participation citoyenne au Bénin. De la conception à la mise en œuvre, chaque réalisation reflète notre engagement pour l'innovation sociale.
         </p>
         <div class="mt-8 flex flex-col sm:flex-row gap-4 justify-center">

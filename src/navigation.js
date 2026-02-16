@@ -20,14 +20,14 @@ export const headerData = {
     { text: "Blog", href: getPermalink("/news") },
     { text: "Magazine", href: getPermalink("/magazines") },
     {
-      text: "Médias & Actualités",
+      text: "Médias",
       links: [
         { text: "Podcasts", href: getPermalink("/podcasts") },
         { text: "Vidéos", href: getPermalink("videos") },
       ],
     },
     {
-      text: "Formations & Ressources",
+      text: "Formations",
       href: getPermalink("/formations"),
     },
   ],
@@ -55,7 +55,7 @@ export const footerData = {
         { text: "Vidéos", href: getPermalink("videos") },
         {
           text: "Formations",
-          href: getPermalink("formations/bootcamps-ateliers"),
+          href: getPermalink("formations"),
         },
       ],
     },
@@ -80,23 +80,23 @@ export const footerData = {
     //{ text: 'Privacy Policy', href: getPermalink('/privacy') },
   ],
   socialLinks: [
-    { icon: "tabler:brand-x", href: "https://x.com/citizenlabsn?s=11" },
+    { icon: "tabler:brand-x", href: "https://x.com/benincitizenlab" },
     {
       icon: "tabler:brand-instagram",
-      href: "https://www.instagram.com/citizenlab_senegal?igsh=MWc4cDYzNGc5em9pcA%3D%3D&utm_source=qr",
+      href: "https://www.instagram.com/africtivistescitizenlabbenin/",
     },
     {
       icon: "tabler:brand-facebook",
-      href: "https://www.facebook.com/share/1AE5haRBVN/?mibextid=wwXIfr",
+      href: "https://www.facebook.com/profile.php?id=61553614994311",
     },
     {
       icon: "tabler:brand-linkedin",
-      href: "https://www.linkedin.com/company/citizenlab-senegal/",
+      href: "https://www.linkedin.com/company/citizen-lab-benin",
     },
-    {
-      icon: "tabler:brand-github",
-      href: "https://github.com/AfricTivistes/citizenlabsenegal",
-    },
+    // {
+    //   icon: "tabler:brand-github",
+    //   href: "https://github.com/AfricTivistes/citizenlabsenegal",
+    // },
   ],
   footNote: `
   <a href="https://www.africtivistes.com" target= '_blank'>
