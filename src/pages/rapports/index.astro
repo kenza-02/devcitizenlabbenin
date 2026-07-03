@@ -1,0 +1,103 @@
+---
+import Layout from "~/layouts/PageLayout.astro";
+import Banner from "~/components/widgets/Banner.astro";
+import { Image } from "astro:assets";
+import actualiteImg from "~/assets/images/rapport.jpeg";
+import { getAllRapports } from "~/utils/api";
+import { FaFilePdf, FaDownload, FaCalendarAlt } from "react-icons/fa";
+
+interface RapportPost {
+  slug: string;
+  date: string;
+  rapport: {
+    titre: string;
+    description: string;
+    fichier: {
+      mediaItemUrl: string;
+      altText: string;
+    } | null;
+  };
+  featuredImage: {
+    node: {
+      mediaItemUrl: string;
+    };
+  } | null;
+}
+
+const rapports: RapportPost[] = await getAllRapports();
+
+const metadata = {
+  title: "Rapport",
+};
+---
+
+<Layout metadata={metadata}>
+  <Banner
+    title={metadata.title}
+    subtitle="Retrouver ici, l'ensemble de nos rapports !"
+  >
+    <Image
+      src={actualiteImg}
+      alt="actualités et médias"
+      class="w-full h-full object-cover absolute inset-0 border-0 z-0 scale-110 transition-transform duration-700"
+    />
+  </Banner>
+
+  <section class="py-16 px-6 md:px-10" id="rapports-section">
+    <h2 class="text-xl font-semibold text-green-800 mb-8">
+      Nos derniers rapports
+    </h2>
+
+    {rapports.length > 0 ? (
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+        {rapports.map((post: RapportPost) => (
+          <div class="relative bg-white border border-gray-200 rounded-xl p-5 flex flex-col gap-3.5 hover:border-green-500 transition-colors duration-200">
+            {/* Lien couvrant tout le card */}
+            <a href={`/rapports/${post.slug}`} class="absolute inset-0 z-0" aria-label={post.rapport?.titre} />
+
+            <div class="flex items-start gap-3.5">
+              <div class="w-12 h-12 min-w-[48px] rounded-lg bg-green-100 flex items-center justify-center text-green-800">
+                <FaFilePdf className="w-6 h-6" />
+              </div>
+              <h3 class="text-[15px] font-medium text-gray-900 leading-snug pt-1">
+                {post.rapport?.titre}
+              </h3>
+            </div>
+
+            <p class="text-[13px] text-gray-500 leading-relaxed flex-1 line-clamp-3">
+              {post.rapport?.description}
+            </p>
+
+            <div class="flex items-center justify-between pt-3 border-t border-gray-100">
+              <span class="inline-flex items-center gap-1.5 text-[12px] text-gray-400">
+                <FaCalendarAlt className="w-3 h-3" />
+                {new Date(post.date).toLocaleDateString("fr-FR", {
+                  day: "numeric",
+                  month: "long",
+                  year: "numeric",
+                })}
+              </span>
+
+              {post.rapport?.fichier?.mediaItemUrl && (
+                <a
+                  href={post.rapport.fichier.mediaItemUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  download
+                  class="relative z-10 inline-flex items-center gap-2 text-[13px] font-medium text-white bg-green-600 hover:bg-green-800 px-5 py-2 rounded-lg transition-colors duration-200"
+                >
+                  <FaDownload className="w-3.5 h-3.5" />
+                  Télécharger
+                </a>
+              )}
+            </div>
+          </div>
+        ))}
+      </div>
+    ) : (
+      <p class="text-gray-500 text-center py-10">
+        Aucun rapport disponible pour le moment.
+      </p>
+    )}
+  </section>
+</Layout>

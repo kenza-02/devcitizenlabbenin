@@ -19,6 +19,7 @@ export const headerData = {
     },
     { text: "Blog", href: getPermalink("/news") },
     { text: "Magazine", href: getPermalink("/magazines") },
+    { text: "Rapports", href: getPermalink("/rapports") },
     {
       text: "Médias",
       links: [
