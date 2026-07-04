@@ -17,7 +17,8 @@ export const headerData = {
         { text: "Projets réalisés", href: getPermalink("/realisations") },
       ],
     },
-    { text: "Blog", href: getPermalink("/news") },
+    { text: "Actualités", href: getPermalink("/news") },
+    { text: "Blog", href: getPermalink("/blog") },
     { text: "Magazine", href: getPermalink("/magazines") },
     {
       text: "Médias",
