@@ -36,7 +36,7 @@ const podcast = {
     : "",
   image: podcastPost.featuredImage?.node?.mediaItemUrl ?? null,
   imageAlt: podcastPost.featuredImage?.node?.altText ?? podcastPost.title ?? "Podcast",
-  type: podcastPost.podcast?.type[0] ?? "video",
+  type: podcastPost.podcast?.type || "video",
   episodeNumber: podcasts.findIndex((p: any) => p.slug === slug) + 1,
 };
 

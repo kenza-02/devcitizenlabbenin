@@ -13,8 +13,8 @@ const metadata = {
 };
 
 // Compter les types
-const audioCount = podcasts.filter((p: any) => p.podcast?.type[0] === 'audio').length;
-const videoCount = podcasts.filter((p: any) => p.podcast?.type[0] === 'video').length;
+const audioCount = podcasts.filter((p: any) => p.podcast?.type === 'audio').length;
+const videoCount = podcasts.filter((p: any) => p.podcast?.type === 'video').length;
 
 ---
 
@@ -132,7 +132,7 @@ const videoCount = podcasts.filter((p: any) => p.podcast?.type[0] === 'video').l
 
                   <!-- Type Badge -->
                   <div class="absolute top-4 left-4 flex items-center gap-2 px-3 py-1.5 bg-white/90 backdrop-blur-sm rounded-full">
-                    {podcasts[0].podcast?.type[0] === 'audio' ? (
+                    {podcasts[0].podcast?.type === 'audio' ? (
                       <>
                         <svg class="w-4 h-4 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
                           <path stroke-linecap="round" stroke-linejoin="round" d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3" />
@@ -175,7 +175,7 @@ const videoCount = podcasts.filter((p: any) => p.podcast?.type[0] === 'video').l
 
                   <div class="flex items-center gap-4">
                     <span class="inline-flex items-center gap-2 text-green-300 font-bold group-hover:text-white transition-colors">
-                      {podcasts[0].podcast?.type[0] === 'audio' ? 'Écouter' : 'Regarder'} l'épisode
+                      {podcasts[0].podcast?.type === 'audio' ? 'Écouter' : 'Regarder'} l'épisode
                       <svg class="w-5 h-5 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M17.25 8.25L21 12m0 0l-3.75 3.75M21 12H3" />
                       </svg>
@@ -189,7 +189,7 @@ const videoCount = podcasts.filter((p: any) => p.podcast?.type[0] === 'video').l
           <!-- Episodes Grid -->
           <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8" id="podcasts-grid">
             {podcasts.slice(1).map((post: any, index: number) => {
-              const type = post.podcast?.type[0] || 'video';
+              const type = post.podcast?.type || 'video';
               const imageUrl = post.featuredImage?.node?.mediaItemUrl;
 
               return (
