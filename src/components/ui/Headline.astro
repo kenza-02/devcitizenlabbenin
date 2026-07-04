@@ -74,7 +74,7 @@ const {
       {title && (
         <h2
           class={twMerge(
-            "font-bold leading-tighter tracking-tighter font-heading text-heading text-3xl relative z-10",
+            "font-bold leading-tighter text-center tracking-tighter font-heading text-heading text-3xl relative z-10",
             titleClass
           )}
           set:html={title}
@@ -84,7 +84,7 @@ const {
       {subtitle && (
         <div class="relative z-10">
           <p
-            class={twMerge("mt-6 text-muted relative", subtitleClass)}
+            class={twMerge("mt-6 text-muted text-center relative", subtitleClass)}
             set:html={subtitle}
           />
           {/* Ligne décorative sous le sous-titre */}

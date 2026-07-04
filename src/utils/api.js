@@ -783,9 +783,9 @@ export async function getAllFormations() {
               slug
               formation {
                 nom
-                description
+                descriptions
                 lieu
-                date
+                dates
                 prix
                 statut
                 duree
@@ -814,6 +814,11 @@ export async function getAllFormations() {
   const json = await response.json();
   console.log("GRAPHQL:", json);
 
+  if (json.errors) {
+    console.error("ERREUR GRAPHQL DÉTECTÉE :", json.errors);
+  }
+  console.log("✅ GRAPHQL RAPPORTS REÇUS AVEC SUCCÈS");
+  console.log(json?.data?.posts?.nodes);
   return json?.data?.posts?.nodes ?? [];
 }
 
@@ -1197,4 +1202,39 @@ export async function getAllProjets() {
   });
   const { data } = await response.json();
   return data?.posts?.nodes ?? [];
+}
+
+export async function getAllRapports() {
+  const apiUrl = import.meta.env.PUBLIC_WORDPRESS_API_URL;
+  const response = await fetch(apiUrl, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      query: `
+        query GetAllRapports {
+          posts(where: { categoryName: "Rapport" }, first: 100) {
+            nodes {
+              slug
+              date
+              rapport {
+                titre
+                description
+                fichier {
+                  mediaItemUrl
+                  altText
+                }
+              }
+              featuredImage {
+                node {
+                  mediaItemUrl
+                }
+              }    
+            }
+          }
+        }
+      `,
+    }),
+  });
+  const json = await response.json();
+  return json?.data?.posts?.nodes ?? [];
 }
