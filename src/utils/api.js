@@ -727,43 +727,128 @@ export function extractAudioUrl(postContent) {
 
 export async function getAllActualites() {
   const apiUrl = import.meta.env.PUBLIC_WORDPRESS_API_URL2;
-  const response = await fetch(apiUrl, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({
-      query: `
-        query GetAllActualites {
-          posts(
-            where: { categoryName: "Actualites" }
-            first: 100
-          ) {
-            nodes {
-              title
-              content
-              excerpt
-              slug
-              uri
-              date
-              categories {
-                nodes {
-                  name
-                  slug
+
+  if (!apiUrl) {
+    console.warn("PUBLIC_WORDPRESS_API_URL2 is not defined");
+    return [];
+  }
+
+  try {
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 10000);
+
+    const response = await fetch(apiUrl, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        query: `
+          query GetAllActualites {
+            posts(
+              where: { categoryName: "Actualites" }
+              first: 100
+            ) {
+              nodes {
+                title
+                content
+                excerpt
+                slug
+                uri
+                date
+                categories {
+                  nodes {
+                    name
+                    slug
+                  }
                 }
-              }
-              featuredImage {
-                node {
-                  mediaItemUrl
-                  altText
+                featuredImage {
+                  node {
+                    mediaItemUrl
+                    altText
+                  }
                 }
               }
             }
           }
-        }
-      `,
-    }),
-  });
-  const { data } = await response.json();
-  return data?.posts?.nodes ?? [];
+        `,
+      }),
+      signal: controller.signal,
+    });
+
+    clearTimeout(timeoutId);
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+
+    const { data } = await response.json();
+    return data?.posts?.nodes ?? [];
+  } catch (error) {
+    console.error("Error fetching actualites:", error.message);
+    return [];
+  }
+}
+
+export async function getAllBlog() {
+  const apiUrl = import.meta.env.PUBLIC_WORDPRESS_API_URL2;
+
+  if (!apiUrl) {
+    console.warn("PUBLIC_WORDPRESS_API_URL2 is not defined");
+    return [];
+  }
+
+  try {
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 10000);
+
+    const response = await fetch(apiUrl, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        query: `
+          query GetAllBlog {
+            posts(
+              where: { categoryName: "Blog" }
+              first: 100
+            ) {
+              nodes {
+                title
+                content
+                excerpt
+                slug
+                uri
+                date
+                categories {
+                  nodes {
+                    name
+                    slug
+                  }
+                }
+                featuredImage {
+                  node {
+                    mediaItemUrl
+                    altText
+                  }
+                }
+              }
+            }
+          }
+        `,
+      }),
+      signal: controller.signal,
+    });
+
+    clearTimeout(timeoutId);
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+
+    const { data } = await response.json();
+    return data?.posts?.nodes ?? [];
+  } catch (error) {
+    console.error("Error fetching blog:", error.message);
+    return [];
+  }
 }
 
 export async function getAllFormations() {
